@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نُظم القيمة | Value Systems - إنشاء النظم الرقمية وأتمتة الأعمال</title>
+    <script src="https://cdn.tailwindcss.com/3.4.15"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            font-family: 'Cairo', sans-serif;
+            background-color: #030712;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        .hero-matrix-container {
+            position: relative;
+            background-color: #050b18;
+            overflow: hidden;
+        }
+        #matrixBgCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: block;
+            pointer-events: none;
+        }
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+            color: #10b981;
+            margin-right: 3px;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .hidden-system { display: none !important; }
+        .service-card, .testimonial-card {
+            transition: transform 0.2s ease, border-color 0.2s;
+            cursor: pointer;
+        }
+        .service-card:hover, .testimonial-card:hover {
+            transform: translateY(-4px);
+        }
+        .admin-stat-card {
+            background: #0f172a;
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid #1e293b;
+        }
+        button.danger {
+            background-color: #ef4444;
+        }
+        button.danger:hover {
+            background-color: #dc2626;
+        }
+        .modal-cms {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-cms-content {
+            background: #0f172a;
+            border: 1px solid #10b98140;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
+        }
+        .demo-system-container {
+            background: #020617;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .demo-input {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            padding: 0.5rem;
+            width: 100%;
+            color: white;
+        }
+        .benefits-list {
+            list-style: none;
+            padding-right: 0;
+            margin: 0.5rem 0;
+        }
+        .benefits-list li {
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: baseline;
+        }
+        .benefits-list li::before {
+            content: "🔹";
+            color: #10b981;
+        }
+    </style>
+</head>
+<body class="text-white antialiased bg-[#030712]">
+    <div id="mainWebsite" class="relative w-full">
+        <header class="border-b border-slate-800 bg-slate-950 sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+                <div id="secretTrigger" class="h-14 w-auto cursor-pointer select-none hover:opacity-95 transition flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 250" class="h-14 w-auto" fill="none">
+                        <defs>
+                            <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#10b981" />
+                                <stop offset="100%" stop-color="#059669" />
+                            </linearGradient>
+                            <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#94a3b8" />
+                                <stop offset="100%" stop-color="#475569" />
+                            </linearGradient>
+                            <filter id="cyberGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="8" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+                        <g transform="translate(10, 0)">
+                            <g id="LogoIcon" transform="translate(40, 45)">
+                                <path d="M80 20 L140 55 L140 125 L80 160 L20 125 L20 55 Z" stroke="#10b981" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="4 4"/>
+                                <line x1="80" y1="20" x2="80" y2="160" stroke="#10b981" stroke-width="1" stroke-opacity="0.1"/>
+                                <line x1="20" y1="55" x2="140" y2="125" stroke="#10b981" stroke-width="1" stroke-opacity="0.1"/>
+                                <line x1="20" y1="125" x2="140" y2="55" stroke="#10b981" stroke-width="1" stroke-opacity="0.1"/>
+                                <path d="M20 55 L80 90 L140 55" stroke="url(#emeraldGrad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" filter="url(#cyberGlow)"/>
+                                <path d="M20 125 L80 160 L140 125" stroke="url(#silverGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M80 90 L80 160" stroke="url(#emeraldGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="80" cy="90" r="7" fill="#ffffff" filter="url(#cyberGlow)"/>
+                                <circle cx="20" cy="55" r="5" fill="#10b981"/>
+                                <circle cx="140" cy="55" r="5" fill="#10b981"/>
+                                <circle cx="80" cy="160" r="5" fill="#94a3b8"/>
+                            </g>
+                            <g id="LogoText" transform="translate(220, 0)">
+                                <text x="520" y="105" font-family="'Cairo', sans-serif" font-weight="900" font-size="52" fill="#ffffff" text-anchor="end" letter-spacing="1">نُظم القيمة</text>
+                                <text x="520" y="145" font-family="'Cairo', sans-serif" font-weight="600" font-size="18" fill="#10b981" text-anchor="end" opacity="0.9">إنشاء النُظم الرقمية وأتمتة الأعمال</text>
+                                <line x1="160" y1="165" x2="520" y2="165" stroke="#1c2d42" stroke-width="2"/>
+                                <text x="520" y="205" font-family="'Courier New', Courier, monospace" font-weight="bold" font-size="28" fill="#94a3b8" text-anchor="end" letter-spacing="6">VALUE SYSTEMS</text>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                <nav class="hidden md:flex space-x-8 space-x-reverse text-sm font-bold text-slate-300">
+                    <a href="#about" class="hover:text-emerald-400 transition">من نحن</a>
+                    <a href="#services" class="hover:text-emerald-400 transition">حلولنا الرقمية</a>
+                    <a href="#showcases" class="hover:text-emerald-400 transition">نماذج جاهزة</a>
+                    <a href="#testimonials" class="hover:text-emerald-400 transition">آراء العملاء</a>
+                </nav>
+                <a href="https://wa.me/966567441919" target="_blank" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/50 px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    تواصل معنا الآن
+                </a>
+            </div>
+        </header>
+
+        <section id="about" class="hero-matrix-container border-b border-slate-900 py-20 text-center">
+            <canvas id="matrixBgCanvas"></canvas>
+            <div class="relative z-10 max-w-4xl mx-auto px-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-slate-950 text-emerald-400 text-xs font-bold mb-6 shadow-lg">
+                    <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>أنظمة ذكية ومؤتمتة بالكامل بالذكاء الاصطناعي</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight mb-6 min-h-[90px] md:min-h-[130px] drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
+                    <span id="aiTitle" class="typewriter-cursor"></span>
+                </h1>
+                <p class="text-sm md:text-base text-slate-100 max-w-2xl mx-auto mb-10 leading-relaxed min-h-[60px] font-semibold bg-slate-950/80 p-4 rounded-xl border border-slate-800 shadow-2xl inline-block">
+                    <span id="aiDesc"></span>
+                </p>
+                <div class="flex justify-center">
+                    <a href="https://wa.me/966567441919" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black px-8 py-4 rounded-xl transition shadow-xl shadow-emerald-500/40 text-sm">
+                        اطلب تصميم نظامك الخاص اليوم
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="aboutTextSection" class="max-w-5xl mx-auto px-4 py-16 border-b border-slate-800">
+            <div class="flex flex-col md:flex-row gap-10 items-center">
+                <div class="flex-1 text-center md:text-right">
+                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block mb-2 font-mono">// قصتنا</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">نحن مهندسو النظم الرقمية</h2>
+                    <p id="aboutText" class="text-slate-300 leading-relaxed text-sm font-medium">فريق من الخبراء التقنيين العرب، نؤمن بأن أتمتة الأعمال هي مستقبل الريادة. ننشئ أنظمة مرنة وآمنة تخدم قطاع المطاعم، العقارات، الصالونات، الأندية الرياضية، والمقاولات، ونحول عملياتك اليدوية إلى منصات رقمية متكاملة تزيد أرباحك وتقلل هدرك التشكيلي والمالي بكفاءة مطلقة.</p>
+                </div>
+                <div class="flex-1 flex justify-center">
+                    <div class="grid grid-cols-2 gap-4 font-sans select-none">
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 text-center w-32 shadow-lg">
+                            <div class="text-2xl font-black text-emerald-400">+25</div>
+                            <div class="text-[10px] text-slate-400 font-bold">نظام مُنفذ</div>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 text-center w-32 shadow-lg">
+                            <div class="text-2xl font-black text-emerald-400">+15</div>
+                            <div class="text-[10px] text-slate-400 font-bold">عميل نشط</div>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 text-center w-32 shadow-lg">
+                            <div class="text-2xl font-black text-emerald-400">100%</div>
+                            <div class="text-[10px] text-slate-400 font-bold">أمان بيانات</div>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 text-center w-32 shadow-lg">
+                            <div class="text-2xl font-black text-emerald-400">24/7</div>
+                            <div class="text-[10px] text-slate-400 font-bold">دعم فني</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="servicesSection" class="max-w-6xl mx-auto px-4 py-16 border-b border-slate-800">
+            <div class="text-center mb-14 bg-slate-950 p-6 rounded-2xl border border-slate-800 max-w-2xl mx-auto shadow-xl">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-3">حلولنا ونظمنا الرقمية المتكاملة</h2>
+                <p class="text-slate-300 text-sm font-medium">نصمم وننشئ تطبيقات وبرمجيات خاصة ومؤتمتة بالكامل لخدمة وإدارة منشأتك وتأمين أرباحك.</p>
+            </div>
+            <div id="servicesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <section id="showcases" class="max-w-6xl mx-auto px-4 py-16 border-b border-slate-800">
+            <div class="mb-12 text-center">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-2 font-mono">// أنظمة جاهزة للتنفيذ الفوري</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white">نماذجنا التشغيلية الحية</h2>
+                <p class="text-slate-400 text-sm mt-2">جرب هذه النماذج بنفسك، ويمكنك تخصيصها لتناسب احتياجاتك بالكامل</p>
+            </div>
+            <div id="showcasesContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+            <div class="text-center mt-8"><p class="text-slate-500 text-xs font-medium">هذه نماذج تشغيلية حية يمكن تخصيصها بنسبة 100% حسب منشأتك، ويتم تركيبها وإدارتها سحابياً خلال أيام معدودة.</p></div>
+        </section>
+
+        <section id="testimonialsSection" class="max-w-5xl mx-auto px-4 py-16 border-b border-slate-800">
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">// آراء عملائنا</span>
+                <h2 class="text-2xl font-bold text-white mt-2">ثقة عملاء نمّت أعمالهم الرقمية</h2>
+            </div>
+            <div id="testimonialsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </section>
+
+        <footer class="border-t border-slate-800 bg-slate-950 text-center py-12 text-xs text-slate-400 font-mono">
+            <p class="mb-4 text-slate-300 font-sans text-sm font-semibold">تواصل مع هندسة النظم والمبيعات حصرياً عبر الواتساب المعتمد</p>
+            <a href="https://wa.me/966567441919" target="_blank" class="text-emerald-400 hover:text-emerald-300 font-bold text-sm block mb-6">🔗 +966 56 744 1919</a>
+            <div id="footerSocialLinks" class="flex justify-center gap-4 mb-4"></div>
+            <p>&copy; 2026 VALUE SYSTEMS. ALL SYSTEMS OPERATIONAL.</p>
+        </footer>
+    </div>
+
+    <!-- نافذة تسجيل الدخول -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-xl hidden-system items-center justify-center z-50 p-4">
+        <div class="bg-slate-900 border border-emerald-500/30 max-w-md w-full p-8 rounded-2xl shadow-2xl relative">
+            <div class="text-center mb-6">
+                <span class="text-emerald-400 font-mono text-xs block mb-1">SECURE_AUTH_GATEWAY</span>
+                <h3 class="text-white text-xl font-bold">لوحة الدخول - مهندسي النظم</h3>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-mono text-slate-400 mb-2">ADMIN_IDENTIFIER</label>
+                    <input type="email" id="adminEmail" class="w-full bg-slate-950 border border-slate-800 px-4 py-3 rounded-xl text-sm font-mono text-emerald-400 focus:outline-none focus:border-emerald-500 transition text-left" placeholder="name@domain.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-400 mb-2">ENCRYPTED_KEY_PASS</label>
+                    <input type="password" id="adminPassword" class="w-full bg-slate-950 border border-slate-800 px-4 py-3 rounded-xl text-sm font-mono text-emerald-400 focus:outline-none focus:border-emerald-500 transition text-left" placeholder="••••••••">
+                </div>
+                <div id="loginError" class="text-rose-400 text-xs font-mono hidden-system bg-rose-500/10 border border-rose-500/20 p-3 rounded-xl">❌ AUTH_FAILURE: INVALID_CREDENTIALS</div>
+                <button onclick="attemptAdminAuth()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/20 text-sm font-mono mt-2">INITIATE_CORE_ACCESS</button>
+                <button onclick="closeLoginModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-400 font-bold py-2.5 rounded-xl transition text-xs font-mono">ABORT_CONNECTION</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال عرض تفاصيل الخدمة -->
+    <div id="serviceModal" class="modal-cms">
+        <div class="modal-cms-content">
+            <h3 id="serviceModalTitle" class="text-xl font-bold text-white mb-3"></h3>
+            <div id="serviceModalDesc" class="text-slate-300 text-sm mb-4"></div>
+            <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 mb-4">
+                <p class="text-emerald-400 font-bold text-xs mb-2">🛠️ المشكلات التي يحلها هذا النظام:</p>
+                <div id="serviceModalBenefitsText" class="text-slate-200 text-sm"></div>
+            </div>
+            <div class="flex justify-between gap-3 mt-2">
+                <a href="https://wa.me/966567441919" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-bold text-center flex-1">📞 تواصل مع المبيعات</a>
+                <button onclick="closeServiceModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm flex-1">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال النظام التجريبي -->
+    <div id="demoModal" class="modal-cms">
+        <div class="modal-cms-content" style="max-width: 700px;">
+            <h3 id="demoModalTitle" class="text-xl font-bold text-white mb-3"></h3>
+            <div id="demoContent" class="demo-system-container"></div>
+            <div class="flex justify-between gap-3 mt-4">
+                <a href="https://wa.me/966567441919" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-bold text-center flex-1">طلب النظام الكامل</a>
+                <button onclick="closeDemoModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm flex-1">إغلاق التجربة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- لوحة التحكم CMS -->
+    <div id="adminDashboard" class="w-full min-h-screen bg-slate-900 hidden-system flex-col md:flex-row font-sans">
+        <aside class="w-full md:w-64 bg-slate-950 border-b md:border-b-0 md:border-l border-slate-800 flex flex-col">
+            <div class="p-6 border-b border-slate-800 flex items-center justify-between">
+                <div><span class="text-emerald-400 font-mono font-bold text-sm block">CMS_V4.0</span><span class="text-[9px] text-slate-500 font-mono">MASTER_CONTROL</span></div>
+                <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            </div>
+            <nav class="p-4 flex-1 space-y-1 text-xs font-mono text-slate-400">
+                <a href="#" onclick="showAdminSection('dashboard')" class="flex items-center gap-3 bg-slate-900 text-emerald-400 p-3 rounded-lg font-bold"><span class="text-base">📊</span> الرادار الإحصائي</a>
+                <a href="#" onclick="showAdminSection('texts')" class="flex items-center gap-3 hover:bg-slate-900 hover:text-white p-3 rounded-lg transition"><span class="text-base">✏️</span> تحرير النصوص العامة</a>
+                <a href="#" onclick="showAdminSection('services')" class="flex items-center gap-3 hover:bg-slate-900 hover:text-white p-3 rounded-lg transition"><span class="text-base">📦</span> إدارة الخدمات</a>
+                <a href="#" onclick="showAdminSection('reviews')" class="flex items-center gap-3 hover:bg-slate-900 hover:text-white p-3 rounded-lg transition"><span class="text-base">⭐</span> إدارة آراء العملاء</a>
+                <a href="#" onclick="showAdminSection('links')" class="flex items-center gap-3 hover:bg-slate-900 hover:text-white p-3 rounded-lg transition"><span class="text-base">🔗</span> إدارة الروابط</a>
+                <a href="#" onclick="showAdminSection('visibility')" class="flex items-center gap-3 hover:bg-slate-900 hover:text-white p-3 rounded-lg transition"><span class="text-base">👁️</span> إظهار/إخفاء الأقسام</a>
+                <a href="#" onclick="resetAllData()" class="flex items-center gap-3 hover:bg-slate-900 text-rose-400 p-3 rounded-lg transition"><span class="text-base">🔄</span> إعادة ضبط الكل</a>
+            </nav>
+            <div class="p-4 border-t border-slate-800 bg-slate-950/50">
+                <button onclick="logoutAdmin()" class="w-full bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 px-3 py-2 rounded-lg text-xs font-mono transition">TERMINATE_SESSION</button>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col min-w-0">
+            <header class="bg-slate-950 border-b border-slate-800 px-8 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="text-right"><h2 class="text-base font-bold text-white">لوحة الإدارة والمراقبة المركزية</h2><p class="text-xs text-slate-400 font-mono mt-0.5">المتحكم النشط: <span class="text-emerald-400">valuesystems.sa@gmail.com</span></p></div>
+                <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-[11px] font-mono text-slate-300"><span class="text-emerald-400">●</span> SERVER_PING: 14ms</div>
+            </header>
+
+            <div class="p-8 space-y-8 flex-1 overflow-y-auto">
+                <div id="adminDashboardSection" class="admin-section">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
+                        <div class="admin-stat-card"><div class="text-slate-500 text-[10px] mb-1">TOTAL_REVENUE_FLOW</div><div class="text-xl font-bold text-white font-sans">84,400 <span class="text-xs text-slate-400">SAR</span></div></div>
+                        <div class="admin-stat-card"><div class="text-slate-500 text-[10px] mb-1">ACTIVE_DEPLOYED_SYSTEMS</div><div class="text-xl font-bold text-emerald-400" id="statServicesCount">0</div></div>
+                        <div class="admin-stat-card"><div class="text-slate-500 text-[10px] mb-1">ACTIVE_TESTIMONIALS</div><div class="text-xl font-bold text-emerald-400" id="statReviewsCount">0</div></div>
+                        <div class="admin-stat-card"><div class="text-slate-500 text-[10px] mb-1">CYBER_SECURITY_STATUS</div><div class="text-xl font-bold text-emerald-500">100% <span class="text-xs text-slate-500">SECURE</span></div></div>
+                    </div>
+                </div>
+
+                <div id="adminTextsSection" class="admin-section hidden-system">
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-4">
+                        <h3 class="text-white font-bold">✏️ تحرير النصوص العامة</h3>
+                        <label class="block text-xs text-slate-400">عنوان الهيرو</label><input type="text" id="editHeroTitle" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white">
+                        <label class="block text-xs text-slate-400">الوصف الرئيسي</label><textarea id="editHeroDesc" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white"></textarea>
+                        <label class="block text-xs text-slate-400">نص "من نحن"</label><textarea id="editAboutText" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white"></textarea>
+                        <button onclick="saveTexts()" class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm font-bold">💾 حفظ التغييرات</button>
+                    </div>
+                </div>
+
+                <div id="adminServicesSection" class="admin-section hidden-system">
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-4">
+                        <h3 class="text-white font-bold">📦 إدارة الخدمات</h3>
+                        <div class="flex gap-2"><input type="text" id="newServiceName" placeholder="اسم الخدمة الجديدة" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg p-2 text-white"><button onclick="addService()" class="bg-emerald-600 px-4 py-2 rounded-lg">+ إضافة</button></div>
+                        <div id="adminServicesList" class="space-y-2"></div>
+                    </div>
+                </div>
+
+                <div id="adminReviewsSection" class="admin-section hidden-system">
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-4">
+                        <h3 class="text-white font-bold">⭐ إدارة آراء العملاء</h3>
+                        <div><input type="text" id="newReviewName" placeholder="اسم العميل" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 mb-2 text-white"><textarea id="newReviewText" rows="2" placeholder="نص الرأي" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white"></textarea><button onclick="addReview()" class="bg-emerald-600 px-4 py-2 rounded-lg mt-2">+ إضافة رأي</button></div>
+                        <div id="adminReviewsList" class="space-y-2"></div>
+                    </div>
+                </div>
+
+                <div id="adminLinksSection" class="admin-section hidden-system">
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-4">
+                        <h3 class="text-white font-bold">🔗 إدارة الروابط الاجتماعية</h3>
+                        <label class="block text-xs text-slate-400">فيسبوك</label><input type="url" id="editFacebook" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white">
+                        <label class="block text-xs text-slate-400">تويتر</label><input type="url" id="editTwitter" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white">
+                        <label class="block text-xs text-slate-400">انستغرام</label><input type="url" id="editInstagram" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white">
+                        <button onclick="saveLinks()" class="bg-emerald-600 px-4 py-2 rounded-lg">💾 حفظ الروابط</button>
+                    </div>
+                </div>
+
+                <div id="adminVisibilitySection" class="admin-section hidden-system">
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-4">
+                        <h3 class="text-white font-bold">👁️ التحكم في ظهور الأقسام</h3>
+                        <label><input type="checkbox" id="showHeroCheckbox"> إظهار قسم الهيرو</label><br>
+                        <label><input type="checkbox" id="showAboutCheckbox"> إظهار قسم "من نحن"</label><br>
+                        <label><input type="checkbox" id="showServicesCheckbox"> إظهار قسم الخدمات</label><br>
+                        <label><input type="checkbox" id="showShowcasesCheckbox"> إظهار قسم النماذج الجاهزة</label><br>
+                        <label><input type="checkbox" id="showTestimonialsCheckbox"> إظهار قسم آراء العملاء</label><br>
+                        <button onclick="saveVisibility()" class="bg-emerald-600 px-4 py-2 rounded-lg mt-2">💾 حفظ الإعدادات</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ------------------- البيانات الأساسية -------------------
+        let siteData = {
+            heroTitle: "نبتكر النُظم البرمجية المؤتمتة بالكامل.",
+            heroDesc: "نقوم بتحويل وإدارة العمليات التشغيلية المعقدة في شركتك أو مطعمك إلى واجهات رقمية سلسة ومترابطة لحظياً بالكامل لتقليص نفقاتك التشغيلية وهدرك المالي.",
+            aboutText: "فريق من الخبراء التقنيين العرب، نؤمن بأن أتمتة الأعمال هي مستقبل الريادة. ننشئ أنظمة مرنة وآمنة تخدم قطاع المطاعم، العقارات، الصالونات، الأندية الرياضية، والمقاولات، ونحول عملياتك اليدوية إلى منصات رقمية متكاملة تزيد أرباحك وتقلل هدرك التشكيلي والمالي بكفاءة مطلقة.",
+            services: [
+                { id: "s1", name: "🍔 تطبيقات المطاعم والكافيهات", desc: "نظام متكامل يشمل تطبيق للطلب، لوحة تحكم للمطبخ، نقاط بيع (POS)، وإدارة المخزون.", benefits: "• هدر الطعام والمخزون بسبب ضعف الرقابة\n• أخطاء النادل وتأخر الطلبات\n• ضعف تجربة العميل وغياب الولاء" },
+                { id: "s2", name: "🛒 المتاجر الإلكترونية المتقدمة", desc: "منصة تجارة إلكترونية متكاملة مع بوابات دفع، شحن آلي، ونظام إدارة العملاء.", benefits: "• ضعف المبيعات وارتفاع تكلفة الشحن\n• أخطاء في إدارة الطلبات والمخزون\n• عدم تكامل بوابات الدفع والشحن" },
+                { id: "s3", name: "🩺 نظم إدارة العيادات والمراكز الطبية", desc: "نظام إدارة العيادات يشمل حجوزات، ملفات مرضى إلكترونية، فواتير، وتذكيرات آلية.", benefits: "• ازدواج المواعيد وانتظار المرضى طويلاً\n• فقدان أو تعقيد الملفات الطبية الورقية\n• أخطاء الفواتير والتقارير" },
+                { id: "s4", name: "🏢 نظم الشركات العقارية والمنشآت", desc: "منصة لإدارة المجمعات السكنية، عقود الإيجار، التحصيل الإلكتروني، والصيانة.", benefits: "• تراكم العقود الورقية وصعوبة تحصيل الإيجار\n• عدم متابعة الصيانة الدورية\n• نزاعات متكررة مع المستأجرين" },
+                { id: "s5", name: "🏗️ نظم شركات المقاولات والصيانة", desc: "نظام متابعة المشاريع، إدارة التكاليف، التوريدات، وجداول العمالة.", benefits: "• تجاوز الميزانيات والتكاليف غير المتوقعة\n• ضعف تتبع التوريدات والعمالة\n• تأخر الجدولة الزمنية للمشاريع" },
+                { id: "s6", name: "🏋️ تطبيقات الأندية والمراكز الرياضية", desc: "حجز الملاعب، إدارة الاشتراكات، جداول التدريب، والدفع الإلكتروني.", benefits: "• تداخل حجوزات الملاعب والاشتراكات\n• صعوبة إدارة الأعضاء والمدربين يدوياً\n• ضعف الإيرادات وغياب نظام ولاء" },
+                { id: "s7", name: "💄 نظام صالونات التجميل ومراكز العناية", desc: "حجوزات أونلاين، إدارة الكوادر، نظام ولاء، وتقارير مالية.", benefits: "• تداخل المواعيد والازدحام اليومي\n• نسيان العملاء للمواعيد (غياب مرتفع)\n• صعوبة إدارة الكوادر والمنتجات" },
+                { id: "s8", name: "👕 منصات حجز وتأجير الملابس والمعدات الرياضية", desc: "نظام حجز وتأجير مع إدارة المخزون، عقود التأجير، والدفع الإلكتروني.", benefits: "• تلف المعدات وفقدانها نتيجة سوء الإدارة\n• تعقيد عقود التأجير والدفع اليدوي\n• تكدس المخزون وتلفه دون دوران" }
+            ],
+            showcases: [
+                { id: "demo1", name: "🍔 منصة قوت للمطاعم", icon: "🍔", type: "restaurant", desc: "نظام كامل لإدارة الطلبات، الكاشير، المخزون" },
+                { id: "demo2", name: "🩺 نظام طبيبك لإدارة العيادات", icon: "🩺", type: "clinic", desc: "جدولة حجوزات، ملفات مرضى إلكترونية" },
+                { id: "demo3", name: "💄 نظام زينة لصالونات التجميل", icon: "💄", type: "salon", desc: "حجوزات أونلاين، إدارة كادر، نظام ولاء" }
+            ],
+            reviews: [
+                { id: "r1", name: "أحمد المحيسن", text: "نظام قُوت غيّر طريقة إدارة مطعمي بالكامل. أصبحت أراقب التدفقات والطلب لحظة بلحظة ومنعنا الهدر التشغيلي تماماً. مهندسون أكفاء وأنصح بهم.", role: "مالك مطعم بخاري" },
+                { id: "r2", name: "نورة الحارثي", text: "نظام زينة سهل علينا تنظيم الحجوزات اليومية وألغى تداخل المواعيد نهائياً. العميل يحجز بسلاسة والتقارير المالية في نهاية اليوم دقيقة ومريحة.", role: "مديرة صالون تجميل" },
+                { id: "r3", name: "فهد الزهراني", text: "أتمتة عقود الإيجار الرقمية ومراقبة التحصيل المالي وجداول الصيانة الدورية وفرت عليّ وعلى المؤسسة مئات الساعات التشغيلية اليدوية.", role: "مستثمر عقاري" },
+                { id: "r4", name: "لطيفة القحطاني", text: "تطبيق حجز الملاعب الفورية والاشتراكات الشهرية سهّل علينا أتمتة إدارة العضوية لأكثر من 300 مشترك نشط بدون أي أخطاء بشرية.", role: "مديرة أكاديمية رياضية" }
+            ],
+            socialLinks: { facebook: "https://facebook.com", twitter: "https://twitter.com", instagram: "https://instagram.com" },
+            visibility: { showHero: true, showAbout: true, showServices: true, showShowcases: true, showTestimonials: true }
+        };
+
+        // تحميل وحفظ البيانات
+        function loadData() { let saved = localStorage.getItem("value_systems_data"); if(saved) siteData = JSON.parse(saved); renderFrontend(); renderAdmin(); }
+        function saveData() { localStorage.setItem("value_systems_data", JSON.stringify(siteData)); renderFrontend(); renderAdmin(); }
+
+        // عرض الواجهة الأمامية
+        function renderFrontend() {
+            document.getElementById("aiTitle").innerText = siteData.heroTitle;
+            document.getElementById("aiDesc").innerText = siteData.heroDesc;
+            document.getElementById("aboutText").innerText = siteData.aboutText;
+            // عرض الخدمات
+            let servicesHtml = siteData.services.map((s, idx) => `
+                <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl hover:border-emerald-500/60 transition flex flex-col justify-between shadow-xl service-card" onclick="showServiceDetails('${s.id}')">
+                    <div><div class="text-emerald-400 text-xs font-bold mb-2 font-mono">// ${String(idx+1).padStart(2,'0')}</div><h3 class="text-white font-bold mb-3 text-lg">${s.name}</h3><p class="text-slate-300 text-xs leading-relaxed font-medium">${s.desc.substring(0,80)}...</p></div>
+                    <div class="pt-4 border-t border-slate-800 mt-4 text-emerald-400 text-[11px] font-bold">اضغط لمعرفة الحلول والمشكلات التي يعالجها ←</div>
+                </div>
+            `).join("");
+            document.getElementById("servicesContainer").innerHTML = servicesHtml;
+            // عرض النماذج الجاهزة
+            let showcasesHtml = siteData.showcases.map(sc => `
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden shadow-xl hover:border-emerald-500/40 transition">
+                    <div class="h-36 bg-gradient-to-br from-emerald-900/40 to-slate-900 flex items-center justify-center select-none"><span class="text-5xl">${sc.icon}</span></div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-white mb-1">${sc.name}</h3>
+                        <p class="text-slate-400 text-xs mb-3 font-medium">${sc.desc}</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="bg-emerald-950 text-emerald-400 text-[10px] px-2 py-1 rounded-full border border-emerald-800 font-bold">جاهز للتشغيل</span>
+                            <button onclick="openDemoSystem('${sc.id}')" class="text-emerald-400 text-xs font-bold hover:underline">جرب النظام الحي ←</button>
+                        </div>
+                    </div>
+                </div>
+            `).join("");
+            document.getElementById("showcasesContainer").innerHTML = showcasesHtml;
+            // عرض الآراء
+            document.getElementById("testimonialsContainer").innerHTML = siteData.reviews.map(r => `
+                <div class="testimonial-card border border-slate-800 rounded-2xl p-6 backdrop-blur-sm shadow-md">
+                    <div class="flex gap-3 items-center mb-3"><div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-black font-sans">${r.name.charAt(0)}</div><div><h4 class="text-white font-bold text-sm">${r.name}</h4><p class="text-[10px] text-slate-400 font-semibold">${r.role || "عميل"}</p></div></div>
+                    <p class="text-slate-300 text-xs italic font-medium">"${r.text}"</p>
+                </div>
+            `).join("");
+            // الروابط
+            document.getElementById("footerSocialLinks").innerHTML = `<a href="${siteData.socialLinks.facebook}" target="_blank" class="text-emerald-400 hover:text-emerald-300">فيسبوك</a><a href="${siteData.socialLinks.twitter}" target="_blank" class="text-emerald-400 hover:text-emerald-300">تويتر</a><a href="${siteData.socialLinks.instagram}" target="_blank" class="text-emerald-400 hover:text-emerald-300">انستغرام</a>`;
+            // إظهار/إخفاء الأقسام
+            document.querySelector(".hero-matrix-container").style.display = siteData.visibility.showHero ? "block" : "none";
+            document.getElementById("aboutTextSection").style.display = siteData.visibility.showAbout ? "block" : "none";
+            document.getElementById("servicesSection").style.display = siteData.visibility.showServices ? "block" : "none";
+            document.getElementById("showcases").style.display = siteData.visibility.showShowcases ? "block" : "none";
+            document.getElementById("testimonialsSection").style.display = siteData.visibility.showTestimonials ? "block" : "none";
+        }
+
+        // عرض تفاصيل الخدمة (مع تنسيق القائمة)
+        function showServiceDetails(serviceId) {
+            let service = siteData.services.find(s => s.id === serviceId);
+            if(service) {
+                document.getElementById("serviceModalTitle").innerHTML = service.name;
+                document.getElementById("serviceModalDesc").innerHTML = service.desc;
+                let benefitsHtml = `<ul class="benefits-list">` + service.benefits.split('\n').map(line => `<li>${line.trim().replace('•', '')}</li>`).join('') + `</ul>`;
+                document.getElementById("serviceModalBenefitsText").innerHTML = benefitsHtml;
+                document.getElementById("serviceModal").style.display = "flex";
+            }
+        }
+        function closeServiceModal() { document.getElementById("serviceModal").style.display = "none"; }
+
+        // فتح النظام التجريبي
+        function openDemoSystem(showcaseId) {
+            let showcase = siteData.showcases.find(sc => sc.id === showcaseId);
+            if(!showcase) return;
+            document.getElementById("demoModalTitle").innerHTML = `تجربة نظام ${showcase.name}`;
+            let demoContent = "";
+            if(showcase.type === "restaurant") {
+                demoContent = `
+                    <div class="space-y-3">
+                        <p class="text-emerald-400 text-sm font-bold">⭐ نظام إدارة المطعم - تجربة سريعة</p>
+                        <div class="bg-slate-800 p-3 rounded-lg"><label class="block text-xs mb-1">اختر وجبة:</label><select class="demo-input text-sm"><option>برجر</option><option>بيتزا</option><option>سلطة</option></select></div>
+                        <div class="bg-slate-800 p-3 rounded-lg"><label class="block text-xs mb-1">عدد الطلبات:</label><input type="number" class="demo-input" value="1"></div>
+                        <button class="bg-emerald-600 w-full py-2 rounded-lg text-sm" onclick="alert('هذا عرض تجريبي فقط. تواصل معنا لتفعيل النظام الكامل ✅')">إرسال طلب تجريبي</button>
+                        <p class="text-slate-400 text-[10px] text-center mt-2">النظام الكامل يتضمن لوحة تحكم، كاشير، وتقارير لحظية</p>
+                    </div>
+                `;
+            } else if(showcase.type === "clinic") {
+                demoContent = `
+                    <div class="space-y-3">
+                        <p class="text-emerald-400 text-sm font-bold">⭐ تجربة نظام العيادات</p>
+                        <div class="bg-slate-800 p-3 rounded-lg"><label class="block text-xs">اختر موعد:</label><input type="date" class="demo-input"></div>
+                        <div class="bg-slate-800 p-3 rounded-lg"><label class="block text-xs">اسم المريض:</label><input type="text" class="demo-input" placeholder="مريض تجريبي"></div>
+                        <button class="bg-emerald-600 w-full py-2 rounded-lg text-sm" onclick="alert('تم حجز موعد تجريبي ✅ سيتم التواصل معك لتجربة النظام الكامل')">حجز تجريبي</button>
+                    </div>
+                `;
+            } else if(showcase.type === "salon") {
+                demoContent = `
+                    <div class="space-y-3">
+                        <p class="text-emerald-400 text-sm font-bold">⭐ تجربة نظام صالون التجميل</p>
+                        <div class="bg-slate-800 p-3 rounded-lg"><label class="block text-xs">اختر الخدمة:</label><select class="demo-input"><option>قص شعر</option><option>صبغة</option><option>عناية</option></select></div>
+                        <div class="bg-slate-800 p-3 rounded-lg"><label class="block text-xs">التاريخ:</label><input type="date" class="demo-input"></div>
+                        <button class="bg-emerald-600 w-full py-2 rounded-lg text-sm" onclick="alert('تم إرسال طلب تجربة نظام الصالون ✅ سيتم التواصل معكم')">اطلب تجربة النظام</button>
+                    </div>
+                `;
+            } else {
+                demoContent = `<p class="text-slate-300">نظام تجريبي تفاعلي. تواصل معنا لتجربة كاملة.</p>`;
+            }
+            document.getElementById("demoContent").innerHTML = demoContent;
+            document.getElementById("demoModal").style.display = "flex";
+        }
+        function closeDemoModal() { document.getElementById("demoModal").style.display = "none"; }
+
+        // إغلاق المودالات عند النقر خارج المحتوى
+        window.onclick = function(e) {
+            if(e.target === document.getElementById("serviceModal")) closeServiceModal();
+            if(e.target === document.getElementById("demoModal")) closeDemoModal();
+        }
+
+        // وظائف لوحة التحكم
+        function renderAdmin() {
+            document.getElementById("statServicesCount").innerText = siteData.services.length;
+            document.getElementById("statReviewsCount").innerText = siteData.reviews.length;
+            document.getElementById("editHeroTitle").value = siteData.heroTitle;
+            document.getElementById("editHeroDesc").value = siteData.heroDesc;
+            document.getElementById("editAboutText").value = siteData.aboutText;
+            document.getElementById("editFacebook").value = siteData.socialLinks.facebook;
+            document.getElementById("editTwitter").value = siteData.socialLinks.twitter;
+            document.getElementById("editInstagram").value = siteData.socialLinks.instagram;
+            document.getElementById("showHeroCheckbox").checked = siteData.visibility.showHero;
+            document.getElementById("showAboutCheckbox").checked = siteData.visibility.showAbout;
+            document.getElementById("showServicesCheckbox").checked = siteData.visibility.showServices;
+            document.getElementById("showShowcasesCheckbox").checked = siteData.visibility.showShowcases;
+            document.getElementById("showTestimonialsCheckbox").checked = siteData.visibility.showTestimonials;
+            let adminServicesHtml = siteData.services.map(s => `<div class="flex justify-between items-center p-2 border-b border-slate-800"><span>${s.name}</span><div><button onclick="editService('${s.id}')" class="bg-blue-600 px-2 py-1 rounded text-xs ml-1">تعديل</button><button onclick="deleteService('${s.id}')" class="bg-rose-600 px-2 py-1 rounded text-xs">حذف</button></div></div>`).join("");
+            document.getElementById("adminServicesList").innerHTML = adminServicesHtml;
+            let adminReviewsHtml = siteData.reviews.map(r => `<div class="flex justify-between items-center p-2 border-b border-slate-800"><div><strong>${r.name}</strong><br><small>${r.text.substring(0,50)}...</small></div><div><button onclick="editReview('${r.id}')" class="bg-blue-600 px-2 py-1 rounded text-xs ml-1">تعديل</button><button onclick="deleteReview('${r.id}')" class="bg-rose-600 px-2 py-1 rounded text-xs">حذف</button></div></div>`).join("");
+            document.getElementById("adminReviewsList").innerHTML = adminReviewsHtml;
+        }
+        function saveTexts() { siteData.heroTitle = document.getElementById("editHeroTitle").value; siteData.heroDesc = document.getElementById("editHeroDesc").value; siteData.aboutText = document.getElementById("editAboutText").value; saveData(); alert("✅ تم حفظ النصوص"); }
+        function saveLinks() { siteData.socialLinks.facebook = document.getElementById("editFacebook").value; siteData.socialLinks.twitter = document.getElementById("editTwitter").value; siteData.socialLinks.instagram = document.getElementById("editInstagram").value; saveData(); alert("✅ تم حفظ الروابط"); }
+        function saveVisibility() { siteData.visibility.showHero = document.getElementById("showHeroCheckbox").checked; siteData.visibility.showAbout = document.getElementById("showAboutCheckbox").checked; siteData.visibility.showServices = document.getElementById("showServicesCheckbox").checked; siteData.visibility.showShowcases = document.getElementById("showShowcasesCheckbox").checked; siteData.visibility.showTestimonials = document.getElementById("showTestimonialsCheckbox").checked; saveData(); alert("✅ تم حفظ إعدادات الظهور"); }
+        function addService() { let name = document.getElementById("newServiceName").value.trim(); if(name) { let newId = "s"+Date.now(); siteData.services.push({ id: newId, name: name, desc: "وصف الخدمة", benefits: "• مشكلة 1\n• مشكلة 2\n• مشكلة 3" }); saveData(); document.getElementById("newServiceName").value=""; } }
+        function editService(id) { let s = siteData.services.find(s=>s.id===id); if(s){ let newName = prompt("اسم الخدمة", s.name); if(newName) s.name = newName; let newDesc = prompt("الوصف", s.desc); if(newDesc) s.desc = newDesc; let newBenefits = prompt("المشكلات التي يحلها (كل مشكلة في سطر جديد)", s.benefits); if(newBenefits) s.benefits = newBenefits; saveData(); } }
+        function deleteService(id) { if(confirm("حذف؟")){ siteData.services = siteData.services.filter(s=>s.id!==id); saveData(); } }
+        function addReview() { let name = document.getElementById("newReviewName").value.trim(); let text = document.getElementById("newReviewText").value.trim(); if(name && text){ siteData.reviews.push({ id: "r"+Date.now(), name: name, text: text, role: "عميل" }); saveData(); document.getElementById("newReviewName").value=""; document.getElementById("newReviewText").value=""; } }
+        function editReview(id) { let r = siteData.reviews.find(r=>r.id===id); if(r){ let newName = prompt("الاسم", r.name); if(newName) r.name = newName; let newText = prompt("النص", r.text); if(newText) r.text = newText; let newRole = prompt("الدور", r.role); if(newRole) r.role = newRole; saveData(); } }
+        function deleteReview(id) { if(confirm("حذف الرأي؟")){ siteData.reviews = siteData.reviews.filter(r=>r.id!==id); saveData(); } }
+        function resetAllData() { if(confirm("إعادة ضبط الكل؟")){ localStorage.removeItem("value_systems_data"); location.reload(); } }
+        function showAdminSection(section) { document.querySelectorAll(".admin-section").forEach(el=>el.classList.add("hidden-system")); document.getElementById(`admin${section.charAt(0).toUpperCase()+section.slice(1)}Section`).classList.remove("hidden-system"); }
+        
+        // دالة تسجيل الخروج (تم إصلاحها)
+        function logoutAdmin() {
+            if (confirm("⚠️ هل أنت متأكد من تسجيل الخروج من لوحة التحكم؟")) {
+                localStorage.removeItem("admin_logged_in");
+                // إخفاء لوحة التحكم
+                document.getElementById("adminDashboard").classList.add("hidden-system");
+                document.getElementById("adminDashboard").classList.remove("flex");
+                // إظهار الموقع العام
+                document.getElementById("mainWebsite").classList.remove("hidden-system");
+                // إخفاء أي رسائل خطأ قد تكون ظاهرة
+                document.getElementById("loginError").classList.add("hidden-system");
+                // تفريغ حقول الدخول
+                document.getElementById("adminEmail").value = "";
+                document.getElementById("adminPassword").value = "";
+                // التمرير لأعلى الصفحة
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                // اختياري: إعادة تحميل البيانات للتأكد من نظافة الحالة
+                // لا نحتاج لإعادة تحميل الصفحة، فقط نعرض الموقع العام.
+            }
+        }
+        
+        // نظام تسجيل الدخول
+        function openLoginModal() { document.getElementById("loginModal").classList.remove("hidden-system"); document.getElementById("loginModal").classList.add("flex"); }
+        function closeLoginModal() { document.getElementById("loginModal").classList.add("hidden-system"); document.getElementById("loginModal").classList.remove("flex"); document.getElementById("loginError").classList.add("hidden-system"); }
+        function attemptAdminAuth() {
+            let email = document.getElementById("adminEmail").value;
+            let pass = document.getElementById("adminPassword").value;
+            if(email === "valuesystems.sa@gmail.com" && pass === "Karimsystem@1416") {
+                localStorage.setItem("admin_logged_in", "true");
+                closeLoginModal();
+                document.getElementById("mainWebsite").classList.add("hidden-system");
+                document.getElementById("adminDashboard").classList.remove("hidden-system");
+                document.getElementById("adminDashboard").classList.add("flex");
+                window.scrollTo(0,0);
+                renderAdmin();
+            } else { document.getElementById("loginError").classList.remove("hidden-system"); }
+        }
+
+        // تأثير الماتريكس والكتابة
+        const canvas = document.getElementById('matrixBgCanvas');
+        let ctx = canvas.getContext('2d');
+        function resizeCanvas() { let container = document.querySelector('.hero-matrix-container'); if(container){ canvas.width = container.offsetWidth; canvas.height = container.offsetHeight; } }
+        resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+        const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ10';
+        const alphabet = katakana.split('');
+        const fontSize = 14;
+        let columns = canvas.width / fontSize;
+        let rainDrops = [];
+        for(let x=0; x<columns; x++) rainDrops[x] = 1;
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(5, 11, 24, 0.12)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = '#10b981'; ctx.font = fontSize+'px monospace';
+            for(let i=0; i<rainDrops.length; i++) {
+                let text = alphabet[Math.floor(Math.random()*alphabet.length)];
+                ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
+                if(rainDrops[i]*fontSize > canvas.height && Math.random()>0.975) rainDrops[i]=0;
+                rainDrops[i]++;
+            }
+        }
+        setInterval(drawMatrix,30);
+        // Typewriter
+        const titlePhrases = ["نبتكر النُظم البرمجية المؤتمتة بالكامل.", "نؤسس تطبيقات سحابية لحماية منشأتك وأرباحك.", "نهندس البنية التحتية والمواقع المتكاملة."];
+        let phraseIdx=0, charIdx=0, isDeleting=false;
+        const titleEl = document.getElementById('aiTitle');
+        function typeTitle() {
+            let current = titlePhrases[phraseIdx];
+            if(isDeleting) { titleEl.textContent = current.substring(0, charIdx-1); charIdx--; }
+            else { titleEl.textContent = current.substring(0, charIdx+1); charIdx++; }
+            let speed = isDeleting ? 35 : 60;
+            if(!isDeleting && charIdx===current.length) { setTimeout(()=>{ isDeleting=true; typeTitle(); },2000); return; }
+            if(isDeleting && charIdx===0) { isDeleting=false; phraseIdx=(phraseIdx+1)%titlePhrases.length; speed=500; }
+            setTimeout(typeTitle, speed);
+        }
+        let descIdx=0, descEl=document.getElementById('aiDesc');
+        function typeDesc() { if(descIdx < siteData.heroDesc.length) { descEl.textContent += siteData.heroDesc.charAt(descIdx); descIdx++; setTimeout(typeDesc, 15); } }
+        
+        // النقر المخفي 5 مرات
+        let clickCount=0, clickTimeout;
+        document.getElementById('secretTrigger').addEventListener('click',()=>{
+            clickCount++; clearTimeout(clickTimeout);
+            clickTimeout = setTimeout(()=>{ clickCount=0; },2000);
+            if(clickCount===5) { clickCount=0; openLoginModal(); }
+        });
+
+        window.addEventListener('DOMContentLoaded',()=>{
+            loadData();
+            if(localStorage.getItem("admin_logged_in")==="true") { attemptAdminAuth(); }
+            setTimeout(typeTitle,500);
+            setTimeout(()=>{ descEl.textContent=""; typeDesc(); },1200);
+        });
+    </script>
+</body>
+</html>
